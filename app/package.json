@@ -1,0 +1,12 @@
+{
+  "name": "spark-app",
+  "version": "1.0.0",
+  "description": "filtering_matches example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "me",
+  "license": "MPL-2.0"
+}

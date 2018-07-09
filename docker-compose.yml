@@ -1,17 +1,14 @@
 version: '3'
 services:
 
-#  app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    env_file:
-#      - .env-node
-#    environment:
-#      DB: mongodb://mongo:27017/trlogs?w=1
-#    depends_on:
-#      # i need make sure mongo is ready to accept connections before starting node. healthcheck?
-#      - mongo
+  app:
+    build:
+      dockerfile: Dockerfile.app
+      context: .
+    environment:
+      DB: mongodb://mongo:27017/spark?w=1
+    depends_on:
+      - mongo
 
   mongo:
     restart: always
