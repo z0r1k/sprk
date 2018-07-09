@@ -1,0 +1,4 @@
+FROM mongo:latest
+
+COPY ./app/data/*.js /docker-entrypoint-initdb.d/
+COPY ./app/data/*.json /data/
