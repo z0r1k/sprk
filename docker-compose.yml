@@ -9,6 +9,8 @@ services:
       DB: mongodb://mongo:27017/spark?w=1
     depends_on:
       - mongo
+    ports:
+      - 8000:8000
 
   mongo:
     restart: always
