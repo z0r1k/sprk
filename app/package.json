@@ -10,6 +10,7 @@
   "author": "me",
   "license": "MPL-2.0",
   "dependencies": {
+    "enforce": "^0.1.7",
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
     "morgan": "^1.9.0",

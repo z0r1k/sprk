@@ -20,7 +20,7 @@ app.use('/api-docs', swagger.serve, swagger.setup(require('swagger-jsdoc')({
     },
     basePath: '/api/'
   },
-  apis: ['./routes/*.js']
+  apis: ['./routes/*.js', './modules/*.js']
 })));
 app.use('/api/match', require('./routes/match')(express.Router()));
 
