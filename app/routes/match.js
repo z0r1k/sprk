@@ -1,6 +1,6 @@
-const typeHelper = require('../helpers/type');
-const enforce = require("enforce");
-const checks  = new enforce.Enforce();
+const filter = require('../modules/filter');
+const collection = new (require('../modules/collection'))();
+const query = require('../helpers/query');
 
 module.exports = router => {
   /**
@@ -29,27 +29,43 @@ module.exports = router => {
    *       - name: "score"
    *         in: "query"
    *         description: "Compatibility score"
-   *         type: "integer"
-   *         minimum: 1
-   *         maximum: 99
+   *         type: "array"
+   *         items:
+   *           type: "integer"
+   *           minimum: 1
+   *           maximum: 99
+   *           minItems: 0
+   *           maxItems: 2
    *       - name: "age"
    *         in: "query"
    *         description: "Age"
-   *         type: "integer"
-   *         minimum: 18
-   *         maximum: 95
+   *         type: "array"
+   *         items:
+   *           type: "integer"
+   *           minimum: 18
+   *           maximum: 95
+   *           minItems: 0
+   *           maxItems: 2
    *       - name: "height"
    *         in: "query"
    *         description: "Height"
-   *         type: "integer"
-   *         minimum: 135
-   *         maximum: 210
+   *         type: "array"
+   *         items:
+   *           type: "integer"
+   *           minimum: 135
+   *           maximum: 210
+   *           minItems: 0
+   *           maxItems: 2
    *       - name: "distance"
    *         in: "query"
    *         description: "Distance"
-   *         type: "integer"
-   *         minimum: 30
-   *         maximum: 300
+   *         type: "array"
+   *         items:
+   *           type: "integer"
+   *           minimum: 30
+   *           maximum: 300
+   *           minItems: 0
+   *           maxItems: 2
    *     responses:
    *       200:
    *         description: "Success"
@@ -64,46 +80,15 @@ module.exports = router => {
    *     deprecated: false
    */
   router.get('/', async (req, res) => {
-    const {
-      photo,
-      contact,
-      fav,
-      score,
-      age,
-      height,
-      distance
-    } = req.query;
-
-    const filters = {
-      hasPhoto: typeHelper.getBool(photo),
-      isContact: typeHelper.getBool(contact),
-      isFavourite: typeHelper.getBool(fav),
-      score: typeHelper.getInt(score) / 100,
-      age: typeHelper.getInt(age),
-      height: typeHelper.getInt(height),
-      distance: typeHelper.getInt(distance)
-    };
-
-    let validationError = null;
-
-    checks
-      .add('score', enforce.ranges.number(0.01, 0.99))
-      .add('age', enforce.ranges.number(18, 95))
-      .add('height', enforce.ranges.number(135, 210))
-      .add('distance', enforce.ranges.number(30, 300))
-
-      .check(filters, err => {
-        console.warn('Validation error', err);
-
-        const { property, msg } = err;
-        validationError = {error: { property, msg }};
-      });
-
-    if (validationError) {
-      return res.status(400).send(validationError);
+    const filters = query.getFilters(req.query);
+    
+    try {
+      await collection.connect();
+      return res.status(200).send({ matches: await filter(collection, filters) });
+    } catch (err) {
+      console.warn('Oops', err);
+      return res.status(err.code).send({ error: err.data });
     }
-
-    return res.send(filters);
   });
 
   return router;

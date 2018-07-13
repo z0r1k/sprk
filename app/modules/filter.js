@@ -1,3 +1,5 @@
+const enforce = require("enforce");
+
 /**
  * @swagger
  * definitions:
@@ -17,6 +19,9 @@
  *     required:
  *       - "display_name"
  *     properties:
+ *       _id:
+ *         type: "string"
+ *         example: "507c35dd8fada716c89d0013"
  *       display_name:
  *         type: "string"
  *         example: "Max"
@@ -61,3 +66,46 @@
  *         - "Islam"
  *         - "Jewish"
  */
+
+module.exports = async (col, filters = {}) => {
+  if (!col) {
+    let err = new Error('No collection available');
+    err.code = 500;
+    err.data = err.message;
+    throw err;
+  }
+
+  const checks  = new enforce.Enforce({ returnAllErrors : true });
+
+  if (filters.scoreMin) { checks.add('scoreMin', enforce.ranges.number(0.01, 0.99)); }
+  if (filters.scoreMax) { checks.add('scoreMax', enforce.ranges.number(0.01, 0.99)); }
+
+  if (filters.ageMin) { checks.add('ageMin', enforce.ranges.number(18, 95)); }
+  if (filters.ageMax) { checks.add('ageMax', enforce.ranges.number(18, 95)); }
+
+  if (filters.heightMin) { checks.add('heightMin', enforce.ranges.number(135, 210)); }
+  if (filters.heightMax) { checks.add('heightMax', enforce.ranges.number(135, 210)); }
+
+  if (filters.distanceMin) { checks.add('distanceMin', enforce.ranges.number(30, 300)); }
+  if (filters.distanceMax) { checks.add('distanceMax', enforce.ranges.number(30, 300)); }
+
+  checks.check(filters, errors => {
+    if (errors && errors.length) {
+      console.warn('Validation error', errors);
+
+      let err = new Error('Validation errors');
+      err.code = 400;
+      err.data = errors;
+
+      throw err;
+    }
+  });
+
+  try {
+    return await col.find(filters);
+  } catch (err) {
+    err.code = 500;
+    err.data = err.message;
+    throw err;
+  }
+};

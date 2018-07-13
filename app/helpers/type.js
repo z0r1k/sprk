@@ -9,5 +9,12 @@ module.exports = {
 
   getBool: bool => {
     return bool === 'true';
+  },
+
+  getList: list => {
+    try {
+      return !list ? [] : `${list}`.split(',');
+    } catch (e) { console.warn('Failed to convert to list', e); }
+    return [];
   }
 };
