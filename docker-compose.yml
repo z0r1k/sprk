@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.app
       context: .
     environment:
-      DB: mongodb://mongo:27017/spark?w=1
+      DB: mongodb://mongo:27017/${DB_NAME}?w=1
     depends_on:
       - mongo
     ports:
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.db
       context: .
     environment:
-      MONGO_INITDB_DATABASE: spark
+      MONGO_INITDB_DATABASE: ${DB_NAME}
     volumes:
       - ./db:/data/db:rw
     ports:
