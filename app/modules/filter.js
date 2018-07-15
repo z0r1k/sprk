@@ -8,12 +8,15 @@ const enforce = require("enforce");
  *     properties:
  *       name:
  *         type: "string"
- *       lat:
- *         type: "number"
- *         format: "float"
- *       lon:
- *         type: "number"
- *         format: "float"
+ *       loc:
+ *        type: "object"
+ *        properties:
+ *          x:
+ *            type: "number"
+ *            format: "float"
+ *          y:
+ *            type: "number"
+ *            format: "float"
  *   Match:
  *     type: "object"
  *     required:
@@ -86,8 +89,7 @@ module.exports = async (col, filters = {}) => {
   if (filters.heightMin) { checks.add('heightMin', enforce.ranges.number(135, 210)); }
   if (filters.heightMax) { checks.add('heightMax', enforce.ranges.number(135, 210)); }
 
-  if (filters.distanceMin) { checks.add('distanceMin', enforce.ranges.number(30, 300)); }
-  if (filters.distanceMax) { checks.add('distanceMax', enforce.ranges.number(30, 300)); }
+  if (filters.distance) { checks.add('distance', enforce.ranges.number(30, 300)); }
 
   checks.check(filters, errors => {
     if (errors && errors.length) {

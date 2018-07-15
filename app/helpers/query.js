@@ -30,9 +30,7 @@ module.exports = {
     if (heightMin) { filters.heightMin = type.getInt(heightMin); }
     if (heightMax) { filters.heightMax = type.getInt(heightMax); }
 
-    const [ distanceMin, distanceMax ] = type.getList(distance);
-    if (distanceMin) { filters.distanceMin = type.getInt(distanceMin); }
-    if (distanceMax) { filters.distanceMax = type.getInt(distanceMax); }
+    if (distance) { filters.distance = type.getInt(distance); }
 
     return filters;
   }

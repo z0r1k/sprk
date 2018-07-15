@@ -59,13 +59,9 @@ module.exports = router => {
    *       - name: "distance"
    *         in: "query"
    *         description: "Distance"
-   *         type: "array"
-   *         items:
-   *           type: "integer"
-   *           minimum: 30
-   *           maximum: 300
-   *           minItems: 0
-   *           maxItems: 2
+   *         type: "integer"
+   *         minimum: 30
+   *         maximum: 300
    *     responses:
    *       200:
    *         description: "Success"

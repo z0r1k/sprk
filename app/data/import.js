@@ -1,9 +1,19 @@
 ﻿﻿try {
-  const data = JSON.parse(cat('/data/matches.json'))
-  const db = new Mongo().getDB('spark')
+  const matches = JSON.parse(cat('/data/matches.json'));
+  const db = new Mongo().getDB('spark');
 
-  db.createCollection('matches')
-  db.matches.insert(data.matches)
+  const data = matches.matches.map(match => {
+    let copy = Object.assign({}, match);
 
-﻿  print('Matches imported', data.matches.length)
-} catch(e) { print(e) }
+    copy.city.loc = { x: copy.city.lon, y: copy.city.lat };
+    delete copy.city.lon;
+    delete copy.city.lat;
+
+    return copy;
+  });
+
+  db.createCollection('matches');
+  db.matches.insert(data);
+
+  print('Matches imported', data.length);
+} catch(e) { print(e); }
