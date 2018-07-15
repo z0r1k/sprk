@@ -49,6 +49,11 @@ class Collection {
   }
 
   _buildQuery(filters = {}) {
+    const myAddr = {
+      name: 'Swindon',
+      loc: { x: -1.772232, y: 51.568535 }
+    };
+
     let query = {};
 
     if (Object.keys(filters).length) {
@@ -60,7 +65,7 @@ class Collection {
       }
 
       if (filters.isContact !== undefined) {
-        query.contacts_exchanged = filters.isContact ? { '$ne': 0 } : { '﻿$eq': 0 };
+        query.contacts_exchanged = filters.isContact ? { '$ne': 0 } : { '$eq': 0 };
       }
 
       if (filters.isFavourite !== undefined) {
@@ -94,9 +99,16 @@ class Collection {
         query.height_in_cm['$lte'] = filters.heightMax;
       }
 
-      // distance
+      if (filters.distance) {
+        query['city.loc'] = {
+          '$geoWithin': {
+            '$centerSphere': [ [myAddr.loc.x, myAddr.loc.y], filters.distance / 6371 ]
+          }
+        };
+      }
     }
 
+    console.debug('Filter query', JSON.stringify(query));
     return query;
   }
 }
