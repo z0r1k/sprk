@@ -77,7 +77,7 @@ module.exports = router => {
    */
   router.get('/', async (req, res) => {
     const filters = query.getFilters(req.query);
-    
+
     try {
       await collection.connect();
       return res.status(200).send({ matches: await filter(collection, filters) });

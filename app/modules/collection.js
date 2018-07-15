@@ -53,18 +53,18 @@ class Collection {
 
     if (Object.keys(filters).length) {
       if (filters.hasPhoto !== undefined) {
-        query.﻿main_photo = {
-          ﻿'$exists': filters.hasPhoto,
-          ﻿'$nin': ['']
+        query.main_photo = {
+          '$exists': filters.hasPhoto,
+          '$nin': ['']
         };
       }
 
-      if (filters.﻿isContact !== undefined) {
-        query.﻿contacts_exchanged = filters.isContact ? { ﻿'$ne': 0 } : { '﻿$eq': 0 };
+      if (filters.isContact !== undefined) {
+        query.contacts_exchanged = filters.isContact ? { '$ne': 0 } : { '﻿$eq': 0 };
       }
 
       if (filters.isFavourite !== undefined) {
-        query.﻿﻿favourite = filters.isFavourite;
+        query.favourite = filters.isFavourite;
       }
 
       if (filters.scoreMin) {
