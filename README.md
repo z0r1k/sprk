@@ -5,7 +5,7 @@ Match filter
 
 To run application:
 
-	docker-compose up
+	docker-compose up --build
 
 Then:
 
