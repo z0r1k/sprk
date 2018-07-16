@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Match filter</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>Match Filter</h1>
+      <small>Real frontend should be here...</small>
+
+      <p>This servers as official README explaining few things.</p>
+
+      <p>
+        First of all I want to take the chance to say <mark>"thank you"</mark> for the opportunity to do this test.
+        <br/><br/>
+        Due to lack of time from my side I didn't finish it completely and decided to focus more on backend side even though I have full-stack skills and I would prefer that.<br/>
+        My current focus is more on backend side. Lets say <var>60%</var> backend, <var>20%</var> frontend (client-side JS), <var>10%</var> DevOps and <var>10%</var> team-leading or other soft skills.
+        <br/><br/>
+        To be completelly honest my frontend skills were always on JS side, networking, rendering, performance and such, but not on frameworks (I understand how they work <em>mostly</em> and when and why to apply them but I am not React/Redux/MobX expect or whatever is popular this week) and visual parts like animations or <var>CSS</var>.
+        <br/><br/>
+        To learn more about myself please check <kbd><a href="http://linkedin.com/in/michaelleibenson" target="_blank">http://linkedin.com/in/michaelleibenson</a></kbd>
+      </p>
+
+      <br>
+      <p>
+        So yes, there is no real frontend with filters here. No client-side unit test. Also no integration tests when real server would run and proper REST calls would happen.
+        <br/>
+        But! There is <var>Swagger UI</var> which could be used as UI with filters. Here it is: <a href="http://localhost:8000/api-docs/" target="_blank">http://localhost:8000/api-docs/</a>
+        <br/><br/>
+        I use <var>MongoDB</var> and it is actually does most of the filtering. Validation is also done by npm module. Query build could have been npm module as well but then there will be not much to unit test so I decided to write few bits of code. Unit tests are kinda simplified and better mocking/stubbing could be used, but for now it just shows some approach and I'm not trying to make them perfect or have 100% code coverage. It is just a test task after all.
+        <br/>
+        I believe things could have been done better and S.O.L.I.D. could have been followed more closely but I given time constraints and that it is a test I decided not to make it perfect or 100% production grade. So it is my conscious decision.
+        <br/>
+        I will be happy to explain myself better or discuss different solutions if we will have a chance to meet in person or over the "phone".
+      </p>
+
+      <a href="http://localhost:8000/api/match?photo=true&contact=false&fav=false&score=50,90&age=20,40&height=140,180&distance=100" target="_blank">http://localhost:8000/api/match?photo=true&contact=false&fav=false&score=50,90&age=20,40&height=140,180&distance=100</a>
+
+      <pre><code></code></pre>
+    </div>
+
+    <script type="text/javascript">
+      const code = document.querySelector('code');
+
+      fetch('http://localhost:8000/api/match?photo=true&contact=false&fav=false&score=50,90&age=20,40&height=140,180&distance=100')
+        .then(resp => {
+          return resp.json();
+        })
+        .then(data => {
+          const pretty = JSON.stringify(data, null, 2).trim();
+          console.log(pretty);
+          code.innerHTML = pretty;
+        })
+        .catch(err => console.error('Oops, something went wrong', err));
+    </script>
+  </body>
+</html>

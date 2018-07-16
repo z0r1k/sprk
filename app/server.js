@@ -17,6 +17,8 @@ const collection = new (require('./modules/collection'))();
 
 app.use(morgan('tiny'));
 
+app.use(express.static('web'));
+
 app.use('/api-docs', swagger.serve, swagger.setup(require('swagger-jsdoc')({
   swaggerDefinition: {
     info: {
