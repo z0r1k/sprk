@@ -1,7 +1,7 @@
 const type = require('../helpers/type');
 
 module.exports = {
-  getFilters: query => {
+  getFilters: (query = {}) => {
     let filters = {};
 
     const {

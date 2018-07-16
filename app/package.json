@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine --random=true --stop-on-failure=true tests/**/*.test.js"
   },
   "author": "me",
   "license": "MPL-2.0",
@@ -16,5 +16,8 @@
     "morgan": "^1.9.0",
     "swagger-jsdoc": "^1.9.7",
     "swagger-ui-express": "^3.0.10"
+  },
+  "devDependencies": {
+    "jasmine": "^3.1.0"
   }
 }

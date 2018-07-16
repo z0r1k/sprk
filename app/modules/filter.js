@@ -69,7 +69,6 @@ const enforce = require("enforce");
  *         - "Islam"
  *         - "Jewish"
  */
-
 module.exports = async (col, filters = {}) => {
   if (!col) {
     let err = new Error('No collection available');
