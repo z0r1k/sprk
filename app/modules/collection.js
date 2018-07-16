@@ -41,14 +41,15 @@ class Collection {
     }
 
     try {
-      const result = await this._collection.find(this._buildQuery(filters));
+      const result = await this._collection.find(Collection.buildQuery(filters));
       return await result.toArray();
     } catch (err) { console.warn('Failed to fetch results', err); }
 
     return [];
   }
 
-  _buildQuery(filters = {}) {
+  // @todo probably I could use npm module to build query :|
+  static buildQuery(filters = {}) {
     const myAddr = {
       name: 'Swindon',
       loc: { x: -1.772232, y: 51.568535 }
@@ -59,8 +60,7 @@ class Collection {
     if (Object.keys(filters).length) {
       if (filters.hasPhoto !== undefined) {
         query.main_photo = {
-          '$exists': filters.hasPhoto,
-          '$nin': ['']
+          '$exists': filters.hasPhoto
         };
       }
 

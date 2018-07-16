@@ -79,16 +79,16 @@ module.exports = async (col, filters = {}) => {
 
   const checks  = new enforce.Enforce({ returnAllErrors : true });
 
-  if (filters.scoreMin) { checks.add('scoreMin', enforce.ranges.number(0.01, 0.99)); }
-  if (filters.scoreMax) { checks.add('scoreMax', enforce.ranges.number(0.01, 0.99)); }
+  if (filters.scoreMin !== undefined) { checks.add('scoreMin', enforce.ranges.number(0.01, 0.99)); }
+  if (filters.scoreMax !== undefined) { checks.add('scoreMax', enforce.ranges.number(0.01, 0.99)); }
 
-  if (filters.ageMin) { checks.add('ageMin', enforce.ranges.number(18, 95)); }
-  if (filters.ageMax) { checks.add('ageMax', enforce.ranges.number(18, 95)); }
+  if (filters.ageMin !== undefined) { checks.add('ageMin', enforce.ranges.number(18, 95)); }
+  if (filters.ageMax !== undefined) { checks.add('ageMax', enforce.ranges.number(18, 95)); }
 
-  if (filters.heightMin) { checks.add('heightMin', enforce.ranges.number(135, 210)); }
-  if (filters.heightMax) { checks.add('heightMax', enforce.ranges.number(135, 210)); }
+  if (filters.heightMin !== undefined) { checks.add('heightMin', enforce.ranges.number(135, 210)); }
+  if (filters.heightMax !== undefined) { checks.add('heightMax', enforce.ranges.number(135, 210)); }
 
-  if (filters.distance) { checks.add('distance', enforce.ranges.number(30, 300)); }
+  if (filters.distance !== undefined) { checks.add('distance', enforce.ranges.number(30, 300)); }
 
   checks.check(filters, errors => {
     if (errors && errors.length) {

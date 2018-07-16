@@ -1,3 +1,4 @@
+require('../log');
 const typeHelper = require('../../helpers/type.js');
 
 describe('TypeHelper', () => {

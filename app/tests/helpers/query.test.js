@@ -1,4 +1,5 @@
-const queryHelper = require('../../helpers/query.js');
+require('../log');
+const queryHelper = require('../../helpers/query');
 
 describe('QueryHelper', () => {
   it('should return empty object is there are no filters', () => {
