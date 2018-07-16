@@ -2,11 +2,14 @@ version: '3'
 services:
 
   app:
+    restart: always
+    container_name: app
     build:
       dockerfile: Dockerfile.app
       context: .
     environment:
       DB: mongodb://mongo:27017/${DB_NAME}?w=1
+      COL_NAME:
     depends_on:
       - mongo
     ports:
@@ -14,6 +17,7 @@ services:
 
   mongo:
     restart: always
+    container_name: mongo
     build:
       dockerfile: Dockerfile.db
       context: .
