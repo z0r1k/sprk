@@ -9,6 +9,11 @@ const express = require('express');
 const morgan = require('morgan');
 const swagger = require('swagger-ui-express');
 const app = express();
+const collection = new (require('./modules/collection'))();
+
+(async () => {
+  await collection.connect();
+})()
 
 app.use(morgan('tiny'));
 
@@ -22,6 +27,7 @@ app.use('/api-docs', swagger.serve, swagger.setup(require('swagger-jsdoc')({
   },
   apis: ['./routes/*.js', './modules/*.js']
 })));
-app.use('/api/match', require('./routes/match')(express.Router()));
+
+app.use('/api/match', require('./routes/match')(express.Router(), collection));
 
 app.listen(8000, console.log.bind(console, 'Server is running on port', 8000));

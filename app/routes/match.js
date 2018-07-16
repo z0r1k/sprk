@@ -1,8 +1,7 @@
 const filter = require('../modules/filter');
-const collection = new (require('../modules/collection'))();
 const query = require('../helpers/query');
 
-module.exports = router => {
+module.exports = (router, collection) => {
   /**
    * @swagger
    * /match:
@@ -79,7 +78,6 @@ module.exports = router => {
     const filters = query.getFilters(req.query);
 
     try {
-      await collection.connect();
       return res.status(200).send({ matches: await filter(collection, filters) });
     } catch (err) {
       console.warn('Oops', err);
